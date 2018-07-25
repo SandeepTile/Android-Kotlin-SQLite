@@ -81,5 +81,47 @@ class MainActivity : AppCompatActivity() {
             listview.adapter=adapter
 
         }
+
+        updatebtn.setOnClickListener{
+
+            // update table_name set name=?,desig=?  where emp_id=?
+/* String table, ContentValues values,
+         String whereClause, String[] whereArgs   ->  Int */
+            var cv = ContentValues( )
+            cv.put("name",et2.text.toString())
+            cv.put("mob_no",et3.text.toString())
+            var status =        dBase.update("employee",cv,
+                    "emp_id=?", arrayOf(et1.text.toString()))
+            if(status!=0){
+                Toast.makeText(this@MainActivity,
+                        "Data Updated  Successfully...",
+                        Toast.LENGTH_LONG).show()
+                et1.setText("");et2.setText("")
+                et3.setText("");et4.setText("")
+            }else{
+                Toast.makeText(this@MainActivity,
+                        "Data Updatation is Failed...",
+                        Toast.LENGTH_LONG).show()
+            }
+        }
+
+        deletebtn.setOnClickListener {
+
+            // delete from employee where emp_id=?
+            // String table, String whereClause, String[] whereArgs -> Int
+            var status =  dBase.delete("employee","emp_id=?",
+                    arrayOf(et1.text.toString()))
+            if(status!=0){
+                Toast.makeText(this@MainActivity,
+                        "Data Deleted  Successfully...",
+                        Toast.LENGTH_LONG).show()
+                et1.setText("");et2.setText("")
+                et3.setText("");et4.setText("")
+            }else{
+                Toast.makeText(this@MainActivity,
+                        "Data Deletion is Failed...",
+                        Toast.LENGTH_LONG).show()
+            }
+        }
     }
 }
